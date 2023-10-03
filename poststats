@@ -70,15 +70,5 @@ print "Webhook posting as '" . $webhook->{name} .
   "' in channel " . $webhook->{channel_id} . "\n";
 $file_content = read_file($NewsFile); 
 chop($file_content);
-#$webhook->execute( content => "News Report  - $CurDate", tts => 1 );
-my %NewsHash = (
-content    => "News Report - $CurDate",
-file       => "News.txt",
-data       => "$file_content"
-);
-my $hash_ref = \%NewsHash;
-$webhook->execute( $hash_ref );
- 
-sleep(30);
- 
-$webhook->execute( 'Goodbye, world!' );
+$webhook->execute( content => "News Report - $CurDate", file => {name => "News.txt", data =>"$file_content"});
+exit 0; 
