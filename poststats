@@ -56,7 +56,7 @@ foreach (@InputLines)
 $MaxLine -= 4;
 foreach (@InputLines)
 {
-	if (($CurLine > 3) && ($CurLine <= $MaxLine))
+	if (($CurLine > 2) && ($CurLine <= $MaxLine))
 	{
 		print FH $_;
 	}
@@ -68,7 +68,35 @@ my $CurDate = strftime "%m/%d/%Y", localtime;
 $webhook->get();
 print "Webhook posting as '" . $webhook->{name} .
   "' in channel " . $webhook->{channel_id} . "\n";
-$file_content = read_file($NewsFile); 
+my $file_content = read_file($NewsFile); 
 chop($file_content);
 $webhook->execute( content => "News Report - $CurDate", file => {name => "News.txt", data =>"$file_content"});
+
+
+# Now handle power report
+@InputLines = `$PowerCmd`;
+
+open(FH, '>', $PowerFile) or die $!;
+
+$CurLine = 0;
+$MaxLine = 0;
+foreach (@InputLines)
+{
+	$MaxLine++;
+}
+$MaxLine -= 3;
+foreach (@InputLines)
+{
+	if (($CurLine > 4) && ($CurLine <= $MaxLine))
+	{
+		print FH $_;
+	}
+	$CurLine++;
+}
+close (FH);
+$file_content = read_file($PowerFile); 
+chop($file_content);
+$webhook->execute( content => "Power Report - $CurDate", file => {name => "Power.txt", data =>"$file_content"});
+
+
 exit 0; 
