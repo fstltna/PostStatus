@@ -16,9 +16,9 @@ if (! -f $HookFile)
 
 #my $UserOutputCmd = "echo country \\* |/home/empowner/empire/bin/empire POGO admin";
 # NewsCommand
-my $NewsCmd = "echo news |/home/empowner/empire/bin/empire POGO admin";
+my $NewsCmd = "echo news |/home/empowner/empire/bin/empire visitor visitor";
 # Power Command
-my $PowerCmd = "echo power |/home/empowner/empire/bin/empire POGO admin";
+my $PowerCmd = "echo power |/home/empowner/empire/bin/empire visitor visitor";
 my $NewsFile = "/var/www/html/news.txt";
 my $PowerFile = "/var/www/html/power.txt";
 my @InputLines = ();
