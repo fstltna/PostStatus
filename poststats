@@ -8,6 +8,12 @@ my $MyWebHook = read_file($HookFile);
 chop($MyWebHook);
 my $webhook = WebService::Discord::Webhook->new($MyWebHook);
 
+if (! -f $HookFile)
+{
+	print "$HookFile not found - please paste the webhook in it and run this again\n";
+	exit (0);
+}
+
 #my $UserOutputCmd = "echo country \\* |/home/empowner/empire/bin/empire POGO admin";
 # NewsCommand
 my $NewsCmd = "echo news |/home/empowner/empire/bin/empire POGO admin";
@@ -63,8 +69,10 @@ $webhook->get();
 print "Webhook posting as '" . $webhook->{name} .
   "' in channel " . $webhook->{channel_id} . "\n";
 $file_content = read_file($NewsFile); 
-$webhook->execute( content => "News Report  - $CurDate", tts => 1 );
+chop($file_content);
+#$webhook->execute( content => "News Report  - $CurDate", tts => 1 );
 my %NewsHash = (
+content    => "News Report - $CurDate",
 file       => "News.txt",
 data       => "$file_content"
 );
