@@ -1,0 +1,76 @@
+#!/usr/bin/perl
+use WebService::Discord::Webhook;
+use POSIX qw(strftime);
+use File::Slurp;
+
+my $HookFile = "/root/.MyHook.txt";
+my $MyWebHook = read_file($HookFile);
+chop($MyWebHook);
+my $webhook = WebService::Discord::Webhook->new($MyWebHook);
+
+#my $UserOutputCmd = "echo country \\* |/home/empowner/empire/bin/empire POGO admin";
+# NewsCommand
+my $NewsCmd = "echo news |/home/empowner/empire/bin/empire POGO admin";
+# Power Command
+my $PowerCmd = "echo power |/home/empowner/empire/bin/empire POGO admin";
+my $NewsFile = "/var/www/html/news.txt";
+my $PowerFile = "/var/www/html/power.txt";
+my @InputLines = ();
+
+@InputLines = `$NewsCmd`;
+
+open(FH, '>', $NewsFile) or die $!;
+
+my $CurLine = 0;
+my $MaxLine = 0;
+foreach (@InputLines)
+{
+	$MaxLine++;
+}
+$MaxLine -= 3;
+foreach (@InputLines)
+{
+	if (($CurLine > 4) && ($CurLine <= $MaxLine))
+	{
+		print FH $_;
+	}
+	$CurLine++;
+}
+close (FH);
+
+open(FH, '>', $PowerFile) or die $!;
+@InputLines = `$PowerCmd`;
+
+my $CurLine = 0;
+my $MaxLine = 0;
+foreach (@InputLines)
+{
+	$MaxLine++;
+}
+$MaxLine -= 4;
+foreach (@InputLines)
+{
+	if (($CurLine > 3) && ($CurLine <= $MaxLine))
+	{
+		print FH $_;
+	}
+	$CurLine++;
+}
+close (FH);
+
+my $CurDate = strftime "%m/%d/%Y", localtime;
+$webhook->get();
+print "Webhook posting as '" . $webhook->{name} .
+  "' in channel " . $webhook->{channel_id} . "\n";
+$file_content = read_file($NewsFile); 
+$webhook->execute( content => "News Report  - $CurDate", tts => 1 );
+my %NewsHash = (
+file       => "News.txt",
+data       => "$file_content"
+);
+my $hash_ref = \%NewsHash;
+$webhook->execute( $hash_ref );
+ 
+sleep(30);
+ 
+$webhook->execute( 'Goodbye, world!' );
