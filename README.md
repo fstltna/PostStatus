@@ -1,4 +1,4 @@
-# PostStatus - v1.1
+# PostStatus - v1.2
 Posts the Empire News and Power reports to Discord
 
 [![Download PostStatus For Wolfpack Empire](https://img.shields.io/sourceforge/dm/poststatus.svg)](https://sourceforge.net/projects/poststatus/files/latest/download)
@@ -13,7 +13,7 @@ Add the dependancies:
 
 Create your webhook here:
 
-![WebHook_Setup2](WebHook_Setup2.png)
+![WebHook_Setup2](https://empiredirectory.net/WebHook_Setup2.png)
 
 Paste your webhook into:
 
