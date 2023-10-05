@@ -1,4 +1,4 @@
-# PostStatus - v1.0
+# PostStatus - v1.1
 Posts the Empire News and Power reports to Discord
 
 [![Download PostStatus For Wolfpack Empire](https://img.shields.io/sourceforge/dm/poststatus.svg)](https://sourceforge.net/projects/poststatus/files/latest/download)

@@ -7,7 +7,7 @@ my $HookFile = "/root/.MyHook.txt";
 my $MyWebHook = read_file($HookFile);
 chop($MyWebHook);
 my $webhook = WebService::Discord::Webhook->new($MyWebHook);
-my $PostVersion = "1.0";
+my $PostVersion = "1.1";
 
 print ("PostStatus v$PostVersion\n");
 print ("==================\n");
